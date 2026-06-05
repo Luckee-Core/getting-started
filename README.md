@@ -44,13 +44,34 @@ Each **studio** is a product-shaped slice: typically a **Web** repo (Next.js) an
 | --- | --- | --- | --- |
 | **Luckee Open Source** | Lead / ops CRM-style modular dashboard (Luckee OSS surface) | [`luckee-open-source`](https://github.com/Luckee-Core/luckee-open-source) | [`luckee-open-source-express`](https://github.com/Luckee-Core/luckee-open-source-express) |
 | **Luckee Blueprints** | Workforce training / certifications / delivery shell | [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) | [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) |
-| **Lead Studio** | Lead pipeline and studio workflows (open web edition) | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | — |
+| **Lead Studio** | Lead CRM, research workers, and email queue (self-hosted pair; reference OSS slice) | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | [`lead-studio-express-server`](https://github.com/Luckee-Core/lead-studio-express-server) |
 | **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
 | **Blog Studio** | Blog authoring and distribution | [`blog-studio-open-source-web`](https://github.com/Luckee-Core/blog-studio-open-source-web) | [`blog-studio-open-source-express-server`](https://github.com/Luckee-Core/blog-studio-open-source-express-server) |
 | **Code Your Resume** | Resume builder / job-search CRM patterns | [`code-your-resume-open-source`](https://github.com/Luckee-Core/code-your-resume-open-source) | — |
 | **QR Code Generator** | QR generation API / utilities | — | [`qr-code-generator-open-source-express-server`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server) |
 
 **After you clone:** in each repo, follow **`README.md`** and **`.env.example`** (and any SQL migrations that repo documents).
+
+### Lead Studio (web + API)
+
+Reference pair for self-hosting leads, find-leads (maps), lead-detail research, and outbound email.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/lead-studio-web-open-source](https://github.com/Luckee-Core/lead-studio-web-open-source) |
+| API (Express) | [github.com/Luckee-Core/lead-studio-express-server](https://github.com/Luckee-Core/lead-studio-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/lead-studio-express-server.git
+git clone https://github.com/Luckee-Core/lead-studio-web-open-source.git
+```
+
+1. **Supabase** — run SQL in order from `lead-studio-express-server/sql/README.md`.
+2. **Express** — `cp .env.example .env`, fill `SUPABASE_*` and `ANTHROPIC_API_KEY`, `npm run dev` (port **3032**).
+3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_SERVER_URL=http://localhost:3032`, `npm run dev`.
+4. Open [http://localhost:3000/setup](http://localhost:3000/setup) for the first-run wizard, then `/dashboard`.
+
+Full walkthrough: [`lead-studio-express-server/docs/oss-quickstart.md`](https://github.com/Luckee-Core/lead-studio-express-server/blob/main/docs/oss-quickstart.md). OSS governance (checklists, wire contract): [`mentorai-server/data/open-source/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/open-source) (canonical doc pack).
 
 ---
 

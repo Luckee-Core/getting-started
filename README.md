@@ -1,35 +1,35 @@
 # Luckee — getting started
 
-This repo is the **entry map** for the Luckee system: how **hosted Luckee Core**, **open-source studios**, **Luckee Blueprints**, and the **Luckee Installer Network** fit together, plus links into each public codebase. There is **no application code here**—only the index and onboarding copy.
+This repo is the **map** — not an app. It shows how **Luckee Core** (hosted), **open-source studios**, **Luckee Blueprints**, and the **Installer Network** fit together, and links you to the repos you actually clone.
 
-> **GitHub org for links in this README:** `Luckee-Core`  
-> If your public repos live under a different org, change that string once and replace all `github.com/Luckee-Core/` URLs below.
+> **GitHub org for links below:** `Luckee-Core`  
+> If your public repos live under a different org, change that string once and replace the `github.com/Luckee-Core/` URLs.
 
 ---
 
-## The Luckee system (how the pieces fit)
+## How the pieces fit
 
-These line up with the story on **[Luckee marketing](https://github.com/Luckee-Core/luckee-marketing)** (home: vision → software → open source → on-site delivery).
+Same story as **[luckee-marketing](https://github.com/Luckee-Core/luckee-marketing)**: your data, your workflows — with a hosted path *or* a self-host path when you want to run the stack yourself.
 
 | # | Piece | What it is |
 | --- | --- | --- |
-| **01** | **Luckee Core** | Paid, hosted SaaS—**we run it; you run the business.** One workspace for service businesses (leads, jobs/projects, customers, AI-native workflows). Hosted on Supabase, Vercel, and Railway. Product repos: [`luckee-web`](https://github.com/Luckee-Core/luckee-web), [`luckee-central`](https://github.com/Luckee-Core/luckee-central). |
-| **02** | **Open-source studios** | **5+ apps:** same architecture and quality bar as Core, split into **repos you can self-host**—mostly **Next.js** frontends and **Express** APIs. Adopt **one studio at a time** on your stack. **This README is the map for that path.** |
+| **01** | **Luckee Core** | Paid, hosted SaaS — we run it; you run the business. One workspace for service businesses (leads, jobs/projects, customers, AI-native workflows). Hosted on Supabase, Vercel, and Railway. Product repos: [`luckee-web`](https://github.com/Luckee-Core/luckee-web), [`luckee-central`](https://github.com/Luckee-Core/luckee-central). |
+| **02** | **Open-source studios** | Same architecture and quality bar as Core, split into **repos you can self-host** — mostly **Next.js** frontends and **Express** APIs. Adopt **one studio at a time**. **This README is the map for that path.** |
 | **03** | **Luckee Installer Network** | On-site **AI infrastructure** delivery (hardware through handoff). Installer verification ties to **Luckee Blueprints** certifications; Luckee routes qualified installation work. |
-| — | **Luckee Blueprints** | **Train the workforce**—published tracks, certifications, DIY path alongside Core. App: [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) (+ [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) when you wire the API). |
+| — | **Luckee Blueprints** | **Train the workforce** — published tracks, certifications, DIY path alongside Core. App: [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) (+ [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) when you wire the API). |
 
-**Hero framing (from marketing):** on-premise AI infrastructure—**your data, your workflows**—with premium build support, the Installer Network for physical install, and a **free DIY** lane through **Blueprints + open source**.
+**Short version:** on-premise AI infrastructure — **your data, your workflows** — with premium build support, the Installer Network for physical install, and a **free DIY** lane through **Blueprints + open source**.
 
 ---
 
 ## Clone this map (self-host path)
 
-The marketing site tells operators to start from this repo, then jump into individual studios:
+Start here, then clone only the studio you need:
 
 ```bash
 git clone https://github.com/Luckee-Core/getting-started.git
 cd getting-started
-# Read the studio table below; clone only the web (and API if listed) for the studio you need.
+# Read the studio table below; clone the web (and API if listed) for the studio you need.
 ```
 
 Long-form docs on the marketing deploy live under **`/docs/open-source`** (and nested routes such as **`/docs/open-source/knowledge-studio`**). Repo: [`luckee-marketing`](https://github.com/Luckee-Core/luckee-marketing).
@@ -43,18 +43,18 @@ Each **studio** is a product-shaped slice: typically a **Web** repo (Next.js) an
 | Studio | What it is | Web | API |
 | --- | --- | --- | --- |
 | **Luckee Open Source** | Lead / ops CRM-style modular dashboard (Luckee OSS surface) | [`luckee-open-source`](https://github.com/Luckee-Core/luckee-open-source) | [`luckee-open-source-express`](https://github.com/Luckee-Core/luckee-open-source-express) |
-| **Luckee Blueprints** | Workforce training / certifications / delivery shell | [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) | [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) |
-| **Lead Studio** | Lead CRM, research workers, and email queue (self-hosted pair; reference OSS slice) | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | [`lead-studio-express-server`](https://github.com/Luckee-Core/lead-studio-express-server) |
+| **Luckee Blueprints** | Workforce training, certifications, delivery shell | [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) | [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) |
+| **Lead Studio** | Lead CRM, research workers, email queue — reference self-hosted pair | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | [`lead-studio-express-server`](https://github.com/Luckee-Core/lead-studio-express-server) |
 | **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
 | **Blog Studio** | Blog authoring and distribution | [`blog-studio-open-source-web`](https://github.com/Luckee-Core/blog-studio-open-source-web) | [`blog-studio-open-source-express-server`](https://github.com/Luckee-Core/blog-studio-open-source-express-server) |
 | **Code Your Resume** | Resume builder / job-search CRM patterns | [`code-your-resume-open-source`](https://github.com/Luckee-Core/code-your-resume-open-source) | — |
 | **QR Code Generator** | QR generation API / utilities | — | [`qr-code-generator-open-source-express-server`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server) |
 
-**After you clone:** in each repo, follow **`README.md`** and **`.env.example`** (and any SQL migrations that repo documents).
+**After you clone:** in each repo, follow **`README.md`** and **`.env.example`** (and any SQL migrations that repo documents). The second studio you adopt is usually faster than the first — same Express + Supabase + Next patterns throughout.
 
 ### Lead Studio (web + API)
 
-Reference pair for self-hosting leads, find-leads (maps), lead-detail research, and outbound email.
+Good starting point if outbound leads still live in Maps tabs and spreadsheets. Self-host the pair for find-leads (maps), lead-detail research, and outbound email.
 
 | Repo | URL |
 | --- | --- |
@@ -71,7 +71,7 @@ git clone https://github.com/Luckee-Core/lead-studio-web-open-source.git
 3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_SERVER_URL=http://localhost:3032`, `npm run dev`.
 4. Open [http://localhost:3000/setup](http://localhost:3000/setup) for the first-run wizard, then `/dashboard`.
 
-Full walkthrough: [`lead-studio-express-server/docs/oss-quickstart.md`](https://github.com/Luckee-Core/lead-studio-express-server/blob/main/docs/oss-quickstart.md). OSS governance (checklists, wire contract): [`mentorai-server/data/open-source/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/open-source) (canonical doc pack).
+Full walkthrough: [`lead-studio-express-server/docs/oss-quickstart.md`](https://github.com/Luckee-Core/lead-studio-express-server/blob/main/docs/oss-quickstart.md). OSS governance (checklists, wire contract): [`mentorai-server/data/open-source/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/open-source).
 
 ---
 
@@ -80,10 +80,10 @@ Full walkthrough: [`lead-studio-express-server/docs/oss-quickstart.md`](https://
 Keep the **catalog table** as the single source of truth. To add a studio:
 
 1. **Add one row** to [Open-source studios (catalog)](#open-source-studios-catalog) above.
-2. **Sort** rows alphabetically by the **Studio** column (first word), unless you intentionally group “Luckee *” first—in that case keep Luckee-branded rows together at the top and sort the rest A–Z.
+2. **Sort** rows alphabetically by the **Studio** column (first word), unless you intentionally group “Luckee *” first — keep Luckee-branded rows together at the top and sort the rest A–Z.
 3. **Link shape:** `https://github.com/<ORG>/<repo>` with the same `<ORG>` as the callout at the top of this file.
 4. **Optional docs:** add or link a page from [`luckee-marketing`](https://github.com/Luckee-Core/luckee-marketing) under `/docs/open-source/…` and, if the studio has a **Data** section, under `/docs/data/…` (see `src/config/routes.ts` in marketing for path conventions).
-5. **Marketing home (optional):** if the studio is flagship-level, consider a callout in `src/packages/landing/open-source/`—otherwise the table here + docs is enough.
+5. **Marketing home (optional):** if the studio is flagship-level, consider a callout in `src/packages/landing/open-source/` — otherwise the table here + docs is enough.
 
 **Copy-paste row template** (replace placeholders; delete API cell or use `—`):
 
@@ -114,7 +114,7 @@ Keep the **catalog table** as the single source of truth. To add a studio:
 
 ## Frequent technologies
 
-Same backbone across most studios (so the **second** studio you adopt is faster than the first):
+Same backbone across most studios:
 
 `TypeScript` `React` `Next.js` `Redux Toolkit` `Tailwind` `Express` `Supabase` `Docker` `Node`
 

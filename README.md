@@ -45,6 +45,8 @@ Each **studio** is a product-shaped slice: typically a **Web** repo (Next.js) an
 | **Luckee Open Source** | Lead / ops CRM-style modular dashboard (Luckee OSS surface) | [`luckee-open-source`](https://github.com/Luckee-Core/luckee-open-source) | [`luckee-open-source-express`](https://github.com/Luckee-Core/luckee-open-source-express) |
 | **Luckee Blueprints** | Workforce training, certifications, delivery shell | [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) | [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) |
 | **Lead Studio** | Lead CRM, research workers, email queue — reference self-hosted pair | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | [`lead-studio-express-server`](https://github.com/Luckee-Core/lead-studio-express-server) |
+| **My Health** | Self-hosted appointments, care team, focus areas, and daily notes — personal health dashboard | [`my-health-open-source`](https://github.com/Luckee-Core/my-health-open-source) | [`my-health-open-source-express-server`](https://github.com/Luckee-Core/my-health-open-source-express-server) |
+| **Personal Finances** | Self-hosted money dashboard — CSV imports, your AI prompts for categorization, recurring bills and loans | [`personal-finances`](https://github.com/Luckee-Core/personal-finances) | [`personal-finances-express-server`](https://github.com/Luckee-Core/personal-finances-express-server) |
 | **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
 | **Blog Studio** | Blog authoring and distribution | [`blog-studio-open-source-web`](https://github.com/Luckee-Core/blog-studio-open-source-web) | [`blog-studio-open-source-express-server`](https://github.com/Luckee-Core/blog-studio-open-source-express-server) |
 | **Code Your Resume** | Resume builder / job-search CRM patterns | [`code-your-resume-open-source`](https://github.com/Luckee-Core/code-your-resume-open-source) | — |
@@ -72,6 +74,48 @@ git clone https://github.com/Luckee-Core/lead-studio-web-open-source.git
 4. Open [http://localhost:3000/setup](http://localhost:3000/setup) for the first-run wizard, then `/dashboard`.
 
 Full walkthrough: [`lead-studio-express-server/docs/oss-quickstart.md`](https://github.com/Luckee-Core/lead-studio-express-server/blob/main/docs/oss-quickstart.md). OSS governance (checklists, wire contract): [`mentorai-server/data/open-source/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/open-source).
+
+### My Health (web + API)
+
+Self-host a dashboard for visits, doctors linked to facilities and specialties, and daily notes — without portal printouts scattered across three apps. Good if you want the same Next.js + Express + Supabase split on a **personal** data slice (not a CRM).
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/my-health-open-source](https://github.com/Luckee-Core/my-health-open-source) |
+| API (Express) | [github.com/Luckee-Core/my-health-open-source-express-server](https://github.com/Luckee-Core/my-health-open-source-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/my-health-open-source-express-server.git
+git clone https://github.com/Luckee-Core/my-health-open-source.git
+```
+
+1. **Supabase** — run SQL in order from `my-health-open-source-express-server/docs/supabase/` (`001_…` then `002_…`).
+2. **Express** — `cp .env.example .env`, fill `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`, `npm run dev` (port **3009**).
+3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_API_URL=http://localhost:3009`, `npm run dev`.
+4. Open [http://localhost:3000](http://localhost:3000) for the landing page; dashboard routes under `/appointments`, `/doctors`, `/hospitals`, `/specialties`, `/focus-areas`, `/daily-entries`.
+
+Wire contract and env tables: [`my-health-open-source-express-server/docs/oss/wire-contract.md`](https://github.com/Luckee-Core/my-health-open-source-express-server/blob/main/docs/oss/wire-contract.md). v1 is **local/trusted-network** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/my-health-open-source-express-server/blob/main/SECURITY.md)).
+
+### Personal Finances (web + API)
+
+Self-host a money dashboard when statements still live in spreadsheets and you re-fix the same categories every month. Import bank and credit CSVs, version your own AI prompts (slug assign, category assign, recurring detect), and track recurring bills, anticipated costs, and loans — same Next.js + Express + Supabase split as the other studios.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/personal-finances](https://github.com/Luckee-Core/personal-finances) |
+| API (Express) | [github.com/Luckee-Core/personal-finances-express-server](https://github.com/Luckee-Core/personal-finances-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/personal-finances-express-server.git
+git clone https://github.com/Luckee-Core/personal-finances.git
+```
+
+1. **Supabase** — run SQL in order from [`personal-finances-express-server/docs/database-setup.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/docs/database-setup.md) (`001_…` through `018_…`; skip `002_…` on a fresh install).
+2. **Express** — `cp .env.example .env`, fill `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` (optional `ANTHROPIC_API_KEY` for AI), `npm run dev` (port **3011**).
+3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_SERVER_URL=http://localhost:3011`, `npm run dev`.
+4. Open [http://localhost:3000](http://localhost:3000) for the landing page; dashboard at **`/dashboard`**.
+
+Full walkthrough and wire contract: [`personal-finances-express-server/docs/oss-quickstart.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/docs/oss-quickstart.md). v1 is **local/trusted-operator** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/SECURITY.md)). Built by Matt @ [TroutHouseTech](https://www.trouthousetech.com).
 
 ---
 

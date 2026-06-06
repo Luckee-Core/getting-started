@@ -49,7 +49,7 @@ Each **studio** is a product-shaped slice: typically a **Web** repo (Next.js) an
 | **Personal Finances** | Self-hosted money dashboard — CSV imports, your AI prompts for categorization, recurring bills and loans | [`personal-finances`](https://github.com/Luckee-Core/personal-finances) | [`personal-finances-express-server`](https://github.com/Luckee-Core/personal-finances-express-server) |
 | **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
 | **Blog Studio** | Blog authoring and distribution | [`blog-studio-open-source-web`](https://github.com/Luckee-Core/blog-studio-open-source-web) | [`blog-studio-open-source-express-server`](https://github.com/Luckee-Core/blog-studio-open-source-express-server) |
-| **Code Your Resume** | Resume builder / job-search CRM patterns | [`code-your-resume-open-source`](https://github.com/Luckee-Core/code-your-resume-open-source) | — |
+| **Code Your Resume** | Job-search CRM, resume graphics studio (TSX preview), skills/background/job studios | [`code-your-resume-open-source`](https://github.com/Luckee-Core/code-your-resume-open-source) | [`code-your-resume-open-source-express-server`](https://github.com/Luckee-Core/code-your-resume-open-source-express-server) |
 | **QR Code Generator** | QR generation API / utilities | — | [`qr-code-generator-open-source-express-server`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server) |
 
 **After you clone:** in each repo, follow **`README.md`** and **`.env.example`** (and any SQL migrations that repo documents). The second studio you adopt is usually faster than the first — same Express + Supabase + Next patterns throughout.
@@ -116,6 +116,27 @@ git clone https://github.com/Luckee-Core/personal-finances.git
 4. Open [http://localhost:3000](http://localhost:3000) for the landing page; dashboard at **`/dashboard`**.
 
 Full walkthrough and wire contract: [`personal-finances-express-server/docs/oss-quickstart.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/docs/oss-quickstart.md). v1 is **local/trusted-operator** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/SECURITY.md)). Built by Matt @ [TroutHouseTech](https://www.trouthousetech.com).
+
+### Code Your Resume (web + API)
+
+Self-host a job-search CRM with companies, jobs, applications, and resume studios — graphics (TSX live preview), technical skills, professional background, and per-job coach chat. Same Next.js rewrites + Express + Supabase split; web calls same-origin `/api/data/*` proxied to Express on port **3053**.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/code-your-resume-open-source](https://github.com/Luckee-Core/code-your-resume-open-source) |
+| API (Express) | [github.com/Luckee-Core/code-your-resume-open-source-express-server](https://github.com/Luckee-Core/code-your-resume-open-source-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/code-your-resume-open-source-express-server.git
+git clone https://github.com/Luckee-Core/code-your-resume-open-source.git
+```
+
+1. **Supabase** — run SQL in order from [`code-your-resume-open-source-express-server/docs/`](https://github.com/Luckee-Core/code-your-resume-open-source-express-server/tree/main/docs) (`crm-postgres-schema.sql`, then image graphics, error log, and optional studio schemas — see web [`docs/wire-contract.md`](https://github.com/Luckee-Core/code-your-resume-open-source/blob/main/docs/wire-contract.md)).
+2. **Express** — `cp .env.example .env`, fill `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`, `npm run dev` (port **3053**).
+3. **Web** — `cp .env.example .env.local`, `npm run dev` (Express rewrites default to `http://127.0.0.1:3053` in dev).
+4. Open [http://localhost:3000](http://localhost:3000) (marketing) or [http://localhost:3000/dashboard](http://localhost:3000/dashboard) (app).
+
+Wire contract: [`code-your-resume-open-source/docs/wire-contract.md`](https://github.com/Luckee-Core/code-your-resume-open-source/blob/main/docs/wire-contract.md). OSS governance: [`mentorai-server/data/open-source/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/open-source). v1 is **local/trusted-operator** — optional `CRM_API_SECRET`; see [`SECURITY.md`](https://github.com/Luckee-Core/code-your-resume-open-source/blob/main/SECURITY.md) on both repos.
 
 ---
 

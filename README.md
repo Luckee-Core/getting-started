@@ -138,6 +138,25 @@ git clone https://github.com/Luckee-Core/code-your-resume-open-source.git
 
 Wire contract: [`code-your-resume-open-source/docs/wire-contract.md`](https://github.com/Luckee-Core/code-your-resume-open-source/blob/main/docs/wire-contract.md). OSS governance: [`mentorai-server/data/open-source/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/open-source). v1 is **local/trusted-operator** — optional `CRM_API_SECRET`; see [`SECURITY.md`](https://github.com/Luckee-Core/code-your-resume-open-source/blob/main/SECURITY.md) on both repos.
 
+### QR Code Generator (API only)
+
+Stateless Express API — POST an HTTP(S) URL, get a PNG QR code. No web companion repo and no database for the OSS default.
+
+| Repo | URL |
+| --- | --- |
+| API (Express) | [github.com/Luckee-Core/qr-code-generator-open-source-express-server](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/qr-code-generator-open-source-express-server.git
+cd qr-code-generator-open-source-express-server
+```
+
+1. **Express** — `cp .env.example .env`, `npm install`, `npm run dev` (port **3023**).
+2. Open [http://localhost:3023/docs](http://localhost:3023/docs) for the API reference, or [http://localhost:3023/api/health](http://localhost:3023/api/health) for a health check.
+3. Generate a QR code: `POST http://localhost:3023/api/generate-code` with JSON body `{ "url": "https://example.com" }` → PNG bytes.
+
+OSS governance: [`mentorai-server/data/open-source/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/open-source). Release status: [`docs/oss-release-status.md`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server/blob/main/docs/oss-release-status.md). v1 is **local/trusted-network** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server/blob/main/SECURITY.md), [`docs/production-hardening.md`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server/blob/main/docs/production-hardening.md)).
+
 ---
 
 ## Add a new studio (maintainers)

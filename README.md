@@ -54,6 +54,31 @@ Each **studio** is a product-shaped slice: typically a **Web** repo (Next.js) an
 
 **After you clone:** in each repo, follow **`README.md`** and **`.env.example`** (and any SQL migrations that repo documents). The second studio you adopt is usually faster than the first — same Express + Supabase + Next patterns throughout.
 
+### Luckee Dev Hub (local launcher)
+
+Run **all hooked-up studios** from one browser UI — status probes, **Run** (embedded terminals + Chrome), **Open Cursor**, **Open Chrome**. **Run** opens interactive terminals in a bottom dock panel (Express + Web tabs) via `node-pty` + WebSocket — no macOS Terminal windows by default.
+
+| Repo | Role |
+| --- | --- |
+| [`luckee-hub`](https://github.com/Luckee-Core/luckee-hub) | Next.js UI (:4100) |
+| [`luckee-hub-express-server`](https://github.com/Luckee-Core/luckee-hub-express-server) | Local API + macOS launcher (:4110, `127.0.0.1` only) |
+
+```bash
+git clone https://github.com/Luckee-Core/luckee-hub-express-server.git
+git clone https://github.com/Luckee-Core/luckee-hub.git
+cd luckee-hub-express-server && cp hub.local.json.example hub.local.json
+# Edit hub.local.json — add webDir / expressDir / workspaceFile per studio you have cloned
+```
+
+```bash
+zsh luckee-hub/scripts/start-luckee-hub-dev.sh
+# Or: zsh luckee-hub/scripts/install-luckee-hub-dev-app.sh  → Desktop "Luckee Dev Hub.app"
+```
+
+Open [http://localhost:4100](http://localhost:4100). Studios in `data/studios.registry.json` but missing from `hub.local.json` show as **Available (not hooked up)**.
+
+Set `"useExternalTerminal": true` in `hub.local.json` to fall back to macOS Terminal.app windows (legacy).
+
 ### Lead Studio (web + API)
 
 Good starting point if outbound leads still live in Maps tabs and spreadsheets. Self-host the pair for find-leads (maps), lead-detail research, and outbound email.

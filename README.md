@@ -56,28 +56,22 @@ Each **studio** is a product-shaped slice: typically a **Web** repo (Next.js) an
 
 ### Luckee Dev Hub (local launcher)
 
-Run **all hooked-up studios** from one browser UI — status probes, **Run** (embedded terminals + Chrome), **Open Cursor**, **Open Chrome**. **Run** opens interactive terminals in a bottom dock panel (Express + Web tabs) via `node-pty` + WebSocket — no macOS Terminal windows by default.
+**Canonical docs:** [`mentorai-server/data/how-to/central-hub/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/how-to/central-hub) — overview, project registry/ports, `hub.local.json`, setup, probes, Run, local database, terminals, code map.
 
 | Repo | Role |
 | --- | --- |
-| [`luckee-hub`](https://github.com/Luckee-Core/luckee-hub) | Next.js UI (:4100) |
-| [`luckee-hub-express-server`](https://github.com/Luckee-Core/luckee-hub-express-server) | Local API + macOS launcher (:4110, `127.0.0.1` only) |
+| [`luckee-hub`](https://github.com/Luckee-Core/luckee-hub) | Next.js UI (:4100) — `/projects` list + `/projects/detail` |
+| [`luckee-hub-express-server`](https://github.com/Luckee-Core/luckee-hub-express-server) | Local API + launcher (:4110, `127.0.0.1` only) |
 
 ```bash
 git clone https://github.com/Luckee-Core/luckee-hub-express-server.git
 git clone https://github.com/Luckee-Core/luckee-hub.git
 cd luckee-hub-express-server && cp hub.local.json.example hub.local.json
-# Edit hub.local.json — add webDir / expressDir / workspaceFile per studio you have cloned
-```
-
-```bash
+# Edit hub.local.json → projects — see central-hub/hub-local-config.md
 zsh luckee-hub/scripts/start-luckee-hub-dev.sh
-# Or: zsh luckee-hub/scripts/install-luckee-hub-dev-app.sh  → Desktop "Luckee Dev Hub.app"
 ```
 
-Open [http://localhost:4100](http://localhost:4100). Studios in `data/studios.registry.json` but missing from `hub.local.json` show as **Available (not hooked up)**.
-
-Set `"useExternalTerminal": true` in `hub.local.json` to fall back to macOS Terminal.app windows (legacy).
+Open [http://localhost:4100/projects](http://localhost:4100/projects). Click a project row for detail; embedded terminal dock is on the **right**; **Run** spawns in-browser PTYs. **My Health local Postgres:** Projects → My Health → **Setup database** ([local-database-setup.md](https://github.com/trouthouse-tech/mentorai-server/blob/main/data/how-to/central-hub/local-database-setup.md)).
 
 ### Lead Studio (web + API)
 

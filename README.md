@@ -1,6 +1,6 @@
 # Luckee — getting started
 
-This repo is the **map** — not an app. It shows how **Luckee Core** (hosted), **open-source studios**, **Luckee Blueprints**, and the **Installer Network** fit together, and links you to the repos you actually clone.
+This repo is the **map** — not an app. It shows how **Luckee Core** (hosted), **open-source studios**, **Luckee Blueprints**, and the **Installer Network** fit together. To self-host studios, start with **[Luckee Dev Hub](#start-here-self-host)**; use this README as the catalog reference.
 
 > **GitHub org for links below:** `Luckee-Core`  
 > If your public repos live under a different org, change that string once and replace the `github.com/Luckee-Core/` URLs.
@@ -22,45 +22,15 @@ Same story as **[luckee-marketing](https://github.com/Luckee-Core/luckee-marketi
 
 ---
 
-## Clone this map (self-host path)
+## Start here (self-host)
 
-Start here, then clone only the studio you need:
+**Luckee Dev Hub** is the recommended entry point for running open-source studios locally. Clone and start the hub first; use it to discover studios, copy `git clone` commands, wire local paths, and run dev servers.
 
-```bash
-git clone https://github.com/Luckee-Core/getting-started.git
-cd getting-started
-# Read the studio table below; clone the web (and API if listed) for the studio you need.
-```
-
-Long-form docs on the marketing deploy live under **`/docs/open-source`** (and nested routes such as **`/docs/open-source/knowledge-studio`**). Repo: [`luckee-marketing`](https://github.com/Luckee-Core/luckee-marketing).
-
----
-
-## Open-source studios (catalog)
-
-Each **studio** is a product-shaped slice: typically a **Web** repo (Next.js) and sometimes an **API** repo (Express). Use `—` when that side is not a separate public repo for this OSS slice.
-
-| Studio | What it is | Web | API |
-| --- | --- | --- | --- |
-| **Luckee Open Source** | Lead / ops CRM-style modular dashboard (Luckee OSS surface) | [`luckee-open-source`](https://github.com/Luckee-Core/luckee-open-source) | [`luckee-open-source-express`](https://github.com/Luckee-Core/luckee-open-source-express) |
-| **Luckee Blueprints** | Workforce training, certifications, delivery shell | [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) | [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) |
-| **Lead Studio** | Lead CRM, research workers, email queue — reference self-hosted pair | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | [`lead-studio-express-server`](https://github.com/Luckee-Core/lead-studio-express-server) |
-| **My Health** | Self-hosted appointments, care team, focus areas, and daily notes — personal health dashboard | [`my-health-open-source`](https://github.com/Luckee-Core/my-health-open-source) | [`my-health-open-source-express-server`](https://github.com/Luckee-Core/my-health-open-source-express-server) |
-| **Personal Finances** | Self-hosted money dashboard — CSV imports, your AI prompts for categorization, recurring bills and loans | [`personal-finances`](https://github.com/Luckee-Core/personal-finances) | [`personal-finances-express-server`](https://github.com/Luckee-Core/personal-finances-express-server) |
-| **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
-| **Blog Studio** | Blog authoring and distribution | [`blog-studio-open-source-web`](https://github.com/Luckee-Core/blog-studio-open-source-web) | [`blog-studio-open-source-express-server`](https://github.com/Luckee-Core/blog-studio-open-source-express-server) |
-| **Code Your Resume** | Job-search CRM, resume graphics studio (TSX preview), skills/background/job studios | [`code-your-resume-open-source`](https://github.com/Luckee-Core/code-your-resume-open-source) | [`code-your-resume-open-source-express-server`](https://github.com/Luckee-Core/code-your-resume-open-source-express-server) |
-| **QR Code Generator** | QR generation API / utilities | — | [`qr-code-generator-open-source-express-server`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server) |
-
-**After you clone:** in each repo, follow **`README.md`** and **`.env.example`** (and any SQL migrations that repo documents). The second studio you adopt is usually faster than the first — same Express + Supabase + Next patterns throughout.
-
-### Luckee Dev Hub (local launcher)
-
-**Canonical docs:** [`mentorai-server/data/how-to/central-hub/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/how-to/central-hub) — overview, project registry/ports, `hub.local.json`, setup, probes, Run, local database, terminals, code map.
+**Canonical hub docs:** [`mentorai-server/data/how-to/central-hub/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/how-to/central-hub) — project registry/ports, `hub.local.json`, probes, Run, local database, terminals.
 
 | Repo | Role |
 | --- | --- |
-| [`luckee-hub`](https://github.com/Luckee-Core/luckee-hub) | Next.js UI (:4100) — `/projects` list + `/projects/detail` |
+| [`luckee-hub`](https://github.com/Luckee-Core/luckee-hub) | Next.js UI (:4100) — `/projects` list + project detail |
 | [`luckee-hub-express-server`](https://github.com/Luckee-Core/luckee-hub-express-server) | Local API + launcher (:4110, `127.0.0.1` only) |
 
 ```bash
@@ -71,7 +41,51 @@ cd luckee-hub-express-server && cp hub.local.json.example hub.local.json
 zsh luckee-hub/scripts/start-luckee-hub-dev.sh
 ```
 
-Open [http://localhost:4100/projects](http://localhost:4100/projects). Click a project row for detail; embedded terminal dock is on the **right**; **Run** spawns in-browser PTYs. **My Health local Postgres:** Projects → My Health → **Setup database** ([local-database-setup.md](https://github.com/trouthouse-tech/mentorai-server/blob/main/data/how-to/central-hub/local-database-setup.md)).
+**Workflow:**
+
+1. Open [http://localhost:4100/projects](http://localhost:4100/projects).
+2. Click a studio → project detail → **copy `git clone` commands** for Web and API repos.
+3. Clone repos locally; add `webDir` / `expressDir` in `hub.local.json` (see `hub.local.json.example`).
+4. **Refresh** projects in hub — status moves from Available → Configured.
+5. **Run** from hub; finish setup in each studio repo (`README.md`, `.env.example`, SQL migrations).
+
+Embedded terminal dock is on the **right**; **Run** spawns in-browser PTYs. **My Health local Postgres:** Projects → My Health → **Setup database** ([local-database-setup.md](https://github.com/trouthouse-tech/mentorai-server/blob/main/data/how-to/central-hub/local-database-setup.md)).
+
+---
+
+## Open-source studios (catalog)
+
+Reference index of studios registered in **Luckee Dev Hub → Projects**. Each **studio** is typically a **Web** repo (Next.js) and an **API** repo (Express). Use `—` when that side is not a separate public repo.
+
+Studios share the same backbone — **Next.js + Express + Supabase** — with env, SQL, and platform-token setup documented in **each repo**. The hub gets you cloned, configured, and running locally; repo docs cover production hardening.
+
+| Studio | What it is | Web | API |
+| --- | --- | --- | --- |
+| **Luckee Open Source** | Lead / ops CRM-style modular dashboard (Luckee OSS surface) | [`luckee-open-source`](https://github.com/Luckee-Core/luckee-open-source) | [`luckee-open-source-express`](https://github.com/Luckee-Core/luckee-open-source-express) |
+| **Luckee Blueprints** | Workforce training, certifications, delivery shell | [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) | [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) |
+| **Lead Studio** | Lead CRM, research workers, email queue — reference self-hosted pair | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | [`lead-studio-express-server`](https://github.com/Luckee-Core/lead-studio-express-server) |
+| **My Health** | Self-hosted appointments, care team, focus areas, and daily notes — personal health dashboard | [`my-health-open-source`](https://github.com/Luckee-Core/my-health-open-source) | [`my-health-open-source-express-server`](https://github.com/Luckee-Core/my-health-open-source-express-server) |
+| **Personal Finances** | Self-hosted money dashboard — CSV imports, your AI prompts for categorization, recurring bills and loans | [`personal-finances`](https://github.com/Luckee-Core/personal-finances) | [`personal-finances-express-server`](https://github.com/Luckee-Core/personal-finances-express-server) |
+| **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
+| **Blog Studio** | Blog authoring and distribution | [`blog-studio-open-source-web`](https://github.com/Luckee-Core/blog-studio-open-source-web) | [`blog-studio-open-source-express-server`](https://github.com/Luckee-Core/blog-studio-open-source-express-server) |
+| **Code Control** | Standalone project workspace — schema, conventions, and guided codegen into customer repos | [`code-control`](https://github.com/Luckee-Core/code-control) | [`code-control-express-server`](https://github.com/Luckee-Core/code-control-express-server) |
+| **Code Your Resume** | Job-search CRM, resume graphics studio (TSX preview), skills/background/job studios | [`code-your-resume-open-source`](https://github.com/Luckee-Core/code-your-resume-open-source) | [`code-your-resume-open-source-express-server`](https://github.com/Luckee-Core/code-your-resume-open-source-express-server) |
+| **Instagram Studio** | Blog → AI carousel graphics (TSX preview) and Instagram Graph publishing | [`instagram-studio-open-source`](https://github.com/Luckee-Core/instagram-studio-open-source) | [`instagram-studio-open-source-express-server`](https://github.com/Luckee-Core/instagram-studio-open-source-express-server) |
+| **TikTok Studio** | Blog → AI carousel graphics (TSX preview) and TikTok content publishing | [`tiktok-studio`](https://github.com/Luckee-Core/tiktok-studio) | [`tiktok-studio-express-server`](https://github.com/Luckee-Core/tiktok-studio-express-server) |
+| **QR Code Generator** | QR generation API / utilities | — | [`qr-code-generator-open-source-express-server`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server) |
+
+Long-form docs on the marketing deploy live under **`/docs/open-source`** (e.g. **`/docs/open-source/knowledge-studio`**). Repo: [`luckee-marketing`](https://github.com/Luckee-Core/luckee-marketing).
+
+---
+
+## Optional: clone this map
+
+Clone this repo to browse the studio catalog offline or contribute index fixes — it is **not** required to run studios (start with **Luckee Dev Hub** above).
+
+```bash
+git clone https://github.com/Luckee-Core/getting-started.git
+cd getting-started
+```
 
 ### Lead Studio (web + API)
 
@@ -157,6 +171,27 @@ git clone https://github.com/Luckee-Core/code-your-resume-open-source.git
 
 Wire contract: [`code-your-resume-open-source/docs/wire-contract.md`](https://github.com/Luckee-Core/code-your-resume-open-source/blob/main/docs/wire-contract.md). OSS governance: [`mentorai-server/data/open-source/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/open-source). v1 is **local/trusted-operator** — optional `CRM_API_SECRET`; see [`SECURITY.md`](https://github.com/Luckee-Core/code-your-resume-open-source/blob/main/SECURITY.md) on both repos.
 
+### Code Control (web + API)
+
+Standalone project workspace for TroutHouseTech — define schema, conventions, and drive guided codegen (ARD, data model, CRUD API) into customer repos. Same Next.js + Express + Supabase split as the other studios.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/code-control](https://github.com/Luckee-Core/code-control) |
+| API (Express) | [github.com/Luckee-Core/code-control-express-server](https://github.com/Luckee-Core/code-control-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/code-control-express-server.git
+git clone https://github.com/Luckee-Core/code-control.git
+```
+
+1. **Supabase** — run migrations from `code-control-express-server/src/db/migrations/` against a dedicated project.
+2. **Express** — `cp .env.example .env`, fill `SUPABASE_*`, `CURSOR_*`, and `GITHUB_*` keys, `npm run dev` (port **3010**; hub assigns **3074** when launched from Luckee Dev Hub).
+3. **Web** — `cp .env.example .env`, set `NEXT_PUBLIC_CODE_CONTROL_API_URL=http://localhost:3010` (or hub API port), `npm run dev`.
+4. Open [http://localhost:3000/projects](http://localhost:3000/projects) for the project workspace.
+
+Architecture ADRs: `.cursor/architecture/` in each repo. THT panel links here via `NEXT_PUBLIC_CODE_CONTROL_URL`.
+
 ### QR Code Generator (API only)
 
 Stateless Express API — POST an HTTP(S) URL, get a PNG QR code. No web companion repo and no database for the OSS default.
@@ -183,10 +218,11 @@ OSS governance: [`mentorai-server/data/open-source/`](https://github.com/troutho
 Keep the **catalog table** as the single source of truth. To add a studio:
 
 1. **Add one row** to [Open-source studios (catalog)](#open-source-studios-catalog) above.
-2. **Sort** rows alphabetically by the **Studio** column (first word), unless you intentionally group “Luckee *” first — keep Luckee-branded rows together at the top and sort the rest A–Z.
-3. **Link shape:** `https://github.com/<ORG>/<repo>` with the same `<ORG>` as the callout at the top of this file.
-4. **Optional docs:** add or link a page from [`luckee-marketing`](https://github.com/Luckee-Core/luckee-marketing) under `/docs/open-source/…` and, if the studio has a **Data** section, under `/docs/data/…` (see `src/config/routes.ts` in marketing for path conventions).
-5. **Marketing home (optional):** if the studio is flagship-level, consider a callout in `src/packages/landing/open-source/` — otherwise the table here + docs is enough.
+2. **Register in Luckee Dev Hub** — add matching entries to `luckee-hub/src/config/hub-catalog.ts` and `luckee-hub-express-server/data/projects.registry.json` (unique ports), plus `hub.local.json.example`.
+3. **Sort** rows alphabetically by the **Studio** column (first word), unless you intentionally group “Luckee *” first — keep Luckee-branded rows together at the top and sort the rest A–Z.
+4. **Link shape:** `https://github.com/<ORG>/<repo>` with the same `<ORG>` as the callout at the top of this file.
+5. **Optional docs:** add or link a page from [`luckee-marketing`](https://github.com/Luckee-Core/luckee-marketing) under `/docs/open-source/…` and, if the studio has a **Data** section, under `/docs/data/…` (see `src/config/routes.ts` in marketing for path conventions).
+6. **Marketing home (optional):** if the studio is flagship-level, consider a callout in `src/packages/landing/open-source/` — otherwise the table here + docs is enough.
 
 **Copy-paste row template** (replace placeholders; delete API cell or use `—`):
 

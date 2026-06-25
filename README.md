@@ -65,6 +65,7 @@ Studios share the same backbone — **Next.js + Express + Supabase** — with en
 | **Luckee Blueprints** | Workforce training, certifications, delivery shell | [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) | [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) |
 | **Lead Studio** | Lead CRM, research workers, email queue — reference self-hosted pair | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | [`lead-studio-express-server`](https://github.com/Luckee-Core/lead-studio-express-server) |
 | **My Health** | Self-hosted appointments, care team, focus areas, and daily notes — personal health dashboard | [`my-health-open-source`](https://github.com/Luckee-Core/my-health-open-source) | [`my-health-open-source-express-server`](https://github.com/Luckee-Core/my-health-open-source-express-server) |
+| **My Fundraise** | Fundraise CRM — investors pipeline, graphics studio (TSX preview + PNG export), pitch deck slide coach | [`my-fundraise-web`](https://github.com/Luckee-Core/my-fundraise-web) | [`my-fundraise-express-server`](https://github.com/Luckee-Core/my-fundraise-express-server) |
 | **Personal Finances** | Self-hosted money dashboard — CSV imports, your AI prompts for categorization, recurring bills and loans | [`personal-finances`](https://github.com/Luckee-Core/personal-finances) | [`personal-finances-express-server`](https://github.com/Luckee-Core/personal-finances-express-server) |
 | **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
 | **Blog Studio** | Blog authoring and distribution | [`blog-studio-open-source-web`](https://github.com/Luckee-Core/blog-studio-open-source-web) | [`blog-studio-open-source-express-server`](https://github.com/Luckee-Core/blog-studio-open-source-express-server) |
@@ -128,6 +129,27 @@ git clone https://github.com/Luckee-Core/my-health-open-source.git
 4. Open [http://localhost:3000](http://localhost:3000) for the landing page; dashboard routes under `/appointments`, `/doctors`, `/hospitals`, `/specialties`, `/focus-areas`, `/daily-entries`.
 
 Wire contract and env tables: [`my-health-open-source-express-server/docs/oss/wire-contract.md`](https://github.com/Luckee-Core/my-health-open-source-express-server/blob/main/docs/oss/wire-contract.md). v1 is **local/trusted-network** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/my-health-open-source-express-server/blob/main/SECURITY.md)).
+
+### My Fundraise (web + API)
+
+Self-host a fundraise CRM when investor outreach, deck graphics, and slide copy still live in scattered docs and Figma. Track investors and contacts, run AI paste-import for firm profiles, edit carousel graphics in a TSX studio with live preview, and coach intro-deck slides with per-slide AI chat — same Next.js + Express + Supabase split as the other studios.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/my-fundraise-web](https://github.com/Luckee-Core/my-fundraise-web) |
+| API (Express) | [github.com/Luckee-Core/my-fundraise-express-server](https://github.com/Luckee-Core/my-fundraise-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/my-fundraise-express-server.git
+git clone https://github.com/Luckee-Core/my-fundraise-web.git
+```
+
+1. **Supabase** — run SQL in order from `my-fundraise-express-server/docs/sql/` (`001_…` through `004_…`).
+2. **Express** — `cp .env.example .env`, fill `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `ANTHROPIC_API_KEY`, `npm run dev` (port **3090** when launched from Luckee Dev Hub; repo default is **3009** if you run standalone).
+3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_API_URL` to your Express URL (e.g. `http://localhost:3090`), set `NEXT_PUBLIC_DEV_USER_ID` for AI endpoints, `npm run dev`.
+4. Open [http://localhost:3000](http://localhost:3000) — redirects to **`/investors`**; sidebar also lists **Graphics** and **Pitch Decks**.
+
+Optional: `CURSOR_API_KEY` + `CURSOR_TARGET_REPO` on Express for graphics TSX generation. Graphics preview pipeline: `my-fundraise-express-server/data/how-to/graphics-tsx-preview.md`.
 
 ### Personal Finances (web + API)
 

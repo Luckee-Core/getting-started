@@ -64,7 +64,7 @@ Studios share the same backbone — **Next.js + Express + Supabase** — with en
 | **Luckee Open Source** | Lead / ops CRM-style modular dashboard (Luckee OSS surface) | [`luckee-open-source`](https://github.com/Luckee-Core/luckee-open-source) | [`luckee-open-source-express`](https://github.com/Luckee-Core/luckee-open-source-express) |
 | **Luckee Blueprints** | Workforce training, certifications, delivery shell | [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) | [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) |
 | **Lead Studio** | Lead CRM, research workers, email queue — reference self-hosted pair | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | [`lead-studio-express-server`](https://github.com/Luckee-Core/lead-studio-express-server) |
-| **My Health** | Self-hosted appointments, care team, focus areas, and daily notes — personal health dashboard | [`my-health-open-source`](https://github.com/Luckee-Core/my-health-open-source) | [`my-health-open-source-express-server`](https://github.com/Luckee-Core/my-health-open-source-express-server) |
+| **My Health** | Self-hosted appointments, care team, journal, and health record — personal health dashboard on local Postgres | [`my-health-open-source`](https://github.com/Luckee-Core/my-health-open-source) | [`my-health-open-source-express-server`](https://github.com/Luckee-Core/my-health-open-source-express-server) |
 | **My Fundraise** | Fundraise CRM — investors pipeline, graphics studio (TSX preview + PNG export), pitch deck slide coach | [`my-fundraise-web`](https://github.com/Luckee-Core/my-fundraise-web) | [`my-fundraise-express-server`](https://github.com/Luckee-Core/my-fundraise-express-server) |
 | **Personal Finances** | Self-hosted money dashboard — CSV imports, your AI prompts for categorization, recurring bills and loans | [`personal-finances`](https://github.com/Luckee-Core/personal-finances) | [`personal-finances-express-server`](https://github.com/Luckee-Core/personal-finances-express-server) |
 | **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
@@ -73,6 +73,8 @@ Studios share the same backbone — **Next.js + Express + Supabase** — with en
 | **Code Your Resume** | Job-search CRM, resume graphics studio (TSX preview), skills/background/job studios | [`code-your-resume-open-source`](https://github.com/Luckee-Core/code-your-resume-open-source) | [`code-your-resume-open-source-express-server`](https://github.com/Luckee-Core/code-your-resume-open-source-express-server) |
 | **Instagram Studio** | Blog → AI carousel graphics (TSX preview) and Instagram Graph publishing | [`instagram-studio-open-source`](https://github.com/Luckee-Core/instagram-studio-open-source) | [`instagram-studio-open-source-express-server`](https://github.com/Luckee-Core/instagram-studio-open-source-express-server) |
 | **TikTok Studio** | Blog → AI carousel graphics (TSX preview) and TikTok content publishing | [`tiktok-studio`](https://github.com/Luckee-Core/tiktok-studio) | [`tiktok-studio-express-server`](https://github.com/Luckee-Core/tiktok-studio-express-server) |
+| **Reddit Studio** | Self-host Reddit OAuth connect and markdown self-post publishing per business tenant | [`reddit-studio`](https://github.com/Luckee-Core/reddit-studio) | [`reddit-studio-express-server`](https://github.com/Luckee-Core/reddit-studio-express-server) |
+| **Website Site Scraper** | Playwright API — one URL to full-page text or structured DOM rows | — | [`website-site-scraper-open-source-express-server`](https://github.com/Luckee-Core/website-site-scraper-open-source-express-server) |
 | **QR Code Generator** | QR generation API / utilities | — | [`qr-code-generator-open-source-express-server`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server) |
 
 Long-form docs on the marketing deploy live under **`/docs/open-source`** (e.g. **`/docs/open-source/knowledge-studio`**). Repo: [`luckee-marketing`](https://github.com/Luckee-Core/luckee-marketing).
@@ -111,7 +113,7 @@ Full walkthrough: [`lead-studio-express-server/docs/oss-quickstart.md`](https://
 
 ### My Health (web + API)
 
-Self-host a dashboard for visits, doctors linked to facilities and specialties, and daily notes — without portal printouts scattered across three apps. Good if you want the same Next.js + Express + Supabase split on a **personal** data slice (not a CRM).
+Self-host a dashboard for visits, doctors linked to facilities and specialties, daily notes, and a health record (timeline events, symptom logs, research notes) — without portal printouts scattered across three apps. Good if you want the same Next.js + Express pair on a **personal** data slice with **local Postgres on your Mac** (or Luckee Hub **Setup database**).
 
 | Repo | URL |
 | --- | --- |
@@ -123,12 +125,12 @@ git clone https://github.com/Luckee-Core/my-health-open-source-express-server.gi
 git clone https://github.com/Luckee-Core/my-health-open-source.git
 ```
 
-1. **Supabase** — run SQL in order from `my-health-open-source-express-server/docs/supabase/` (`001_…` then `002_…`).
-2. **Express** — `cp .env.example .env`, fill `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`, `npm run dev` (port **3009**).
+1. **Postgres** — create `my_health` and apply SQL in order from `my-health-open-source-express-server/migrations/` (`001_…` through `003_…`), or use Luckee Hub **Setup database** on the My Health project.
+2. **Express** — `cp .env.example .env`, set `DATABASE_URL`, `npm run dev` (port **3009**).
 3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_API_URL=http://localhost:3009`, `npm run dev`.
-4. Open [http://localhost:3000](http://localhost:3000) for the landing page; dashboard routes under `/appointments`, `/doctors`, `/hospitals`, `/specialties`, `/focus-areas`, `/daily-entries`.
+4. Open [http://localhost:3000](http://localhost:3000) for the landing page; dashboard routes under `/appointments`, `/doctors`, `/hospitals`, `/specialties`, `/focus-areas`, `/daily-entries`, `/medical-history-events`, `/symptom-logs`, `/research-notes`, `/research-note-detail-page`; API docs at `/docs/api`.
 
-Wire contract and env tables: [`my-health-open-source-express-server/docs/oss/wire-contract.md`](https://github.com/Luckee-Core/my-health-open-source-express-server/blob/main/docs/oss/wire-contract.md). v1 is **local/trusted-network** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/my-health-open-source-express-server/blob/main/SECURITY.md)).
+Wire contract and env tables: [`my-health-open-source-express-server/docs/oss/wire-contract.md`](https://github.com/Luckee-Core/my-health-open-source-express-server/blob/main/docs/oss/wire-contract.md). Pair quickstart: [`docs/oss-quickstart.md`](https://github.com/Luckee-Core/my-health-open-source-express-server/blob/main/docs/oss-quickstart.md). v1 is **local/trusted-network** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/my-health-open-source-express-server/blob/main/SECURITY.md)).
 
 ### My Fundraise (web + API)
 
@@ -144,12 +146,33 @@ git clone https://github.com/Luckee-Core/my-fundraise-express-server.git
 git clone https://github.com/Luckee-Core/my-fundraise-web.git
 ```
 
-1. **Supabase** — run SQL in order from `my-fundraise-express-server/docs/sql/` (`001_…` through `004_…`).
+1. **Supabase** — run SQL in order from `my-fundraise-express-server/docs/sql/` (`001_…` through `011_…`; optional seeds `008`, `010`).
 2. **Express** — `cp .env.example .env`, fill `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `ANTHROPIC_API_KEY`, `npm run dev` (port **3090** when launched from Luckee Dev Hub; repo default is **3009** if you run standalone).
-3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_API_URL` to your Express URL (e.g. `http://localhost:3090`), set `NEXT_PUBLIC_DEV_USER_ID` for AI endpoints, `npm run dev`.
-4. Open [http://localhost:3000](http://localhost:3000) — redirects to **`/investors`**; sidebar also lists **Graphics** and **Pitch Decks**.
+3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_SERVER_URL` to your Express URL (e.g. `http://localhost:3090`), set `NEXT_PUBLIC_DEV_USER_ID` for AI endpoints, `npm run dev`.
+4. Open [http://localhost:3000](http://localhost:3000) for the **landing page**; **`/investors`** for the CRM; sidebar also lists **Graphics** and **Pitch Decks**.
 
 Optional: `CURSOR_API_KEY` + `CURSOR_TARGET_REPO` on Express for graphics TSX generation. Graphics preview pipeline: `my-fundraise-express-server/data/how-to/graphics-tsx-preview.md`.
+
+### Reddit Studio (web + API)
+
+Self-host Reddit OAuth connect and markdown self-post publishing when refresh tokens and client secrets should not live in every app’s `.env`. One OAuth connection per business tenant, tokens in your Supabase, publish API for trusted callers — Next.js rewrites to Express (same-origin, no browser CORS).
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/reddit-studio](https://github.com/Luckee-Core/reddit-studio) |
+| API (Express) | [github.com/Luckee-Core/reddit-studio-express-server](https://github.com/Luckee-Core/reddit-studio-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/reddit-studio-express-server.git
+git clone https://github.com/Luckee-Core/reddit-studio.git
+```
+
+1. **Supabase** — run SQL in order from `reddit-studio-express-server/docs/sql/` (`001_…` then `002_…`). `001` alters shared `business_accounts` if the table already exists.
+2. **Express** — `cp .env.example .env`, fill `SUPABASE_*` and `REDDIT_*`, `npm run dev` (port **3010**).
+3. **Web** — `cp .env.example .env.local`, set `EXPRESS_API_URL=http://localhost:3010`, `npm run dev`.
+4. Open [http://localhost:3000](http://localhost:3000) for the **landing page**; **`/settings-reddit`** to connect OAuth.
+
+Wire contract: [`reddit-studio-express-server/docs/oss/wire-contract.md`](https://github.com/Luckee-Core/reddit-studio-express-server/blob/main/docs/oss/wire-contract.md). v1 publish routes are **open** — use network isolation until you add auth ([`SECURITY.md`](https://github.com/Luckee-Core/reddit-studio-express-server/blob/main/SECURITY.md)).
 
 ### Personal Finances (web + API)
 
@@ -170,7 +193,7 @@ git clone https://github.com/Luckee-Core/personal-finances.git
 3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_SERVER_URL=http://localhost:3011`, `npm run dev`.
 4. Open [http://localhost:3000](http://localhost:3000) for the landing page; dashboard at **`/dashboard`**.
 
-Full walkthrough and wire contract: [`personal-finances-express-server/docs/oss-quickstart.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/docs/oss-quickstart.md). v1 is **local/trusted-operator** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/SECURITY.md)). Built by Matt @ [TroutHouseTech](https://www.trouthousetech.com).
+Full walkthrough: [`personal-finances-express-server/docs/oss-quickstart.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/docs/oss-quickstart.md). Wire contract: [`docs/oss/wire-contract.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/docs/oss/wire-contract.md). v1 is **local/trusted-operator** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/SECURITY.md)). Built by Matt @ [TroutHouseTech](https://www.trouthousetech.com).
 
 ### Code Your Resume (web + API)
 
@@ -232,6 +255,25 @@ cd qr-code-generator-open-source-express-server
 3. Generate a QR code: `POST http://localhost:3023/api/generate-code` with JSON body `{ "url": "https://example.com" }` → PNG bytes.
 
 OSS governance: [`mentorai-server/data/open-source/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/open-source). Release status: [`docs/oss-release-status.md`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server/blob/main/docs/oss-release-status.md). v1 is **local/trusted-network** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server/blob/main/SECURITY.md), [`docs/production-hardening.md`](https://github.com/Luckee-Core/qr-code-generator-open-source-express-server/blob/main/docs/production-hardening.md)).
+
+### Website Site Scraper (API only)
+
+Stateless Playwright Express API — POST one URL, get full-page text + metadata (`/api/scrape`) or structured DOM rows from a JSON spec (`/api/extract`). No web companion repo and no database. Consumer apps (e.g. my-newsletter) call it via `WEBSITE_SCRAPER_URL`.
+
+| Repo | URL |
+| --- | --- |
+| API (Express) | [github.com/Luckee-Core/website-site-scraper-open-source-express-server](https://github.com/Luckee-Core/website-site-scraper-open-source-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/website-site-scraper-open-source-express-server.git
+cd website-site-scraper-open-source-express-server
+```
+
+1. **Express** — `cp .env.example .env`, `npm install`, `npm run dev` (port **3043**). Playwright Chromium installs via `postinstall` on Linux.
+2. Open [http://localhost:3043/docs](http://localhost:3043/docs) for the API reference, or [http://localhost:3043/api/health](http://localhost:3043/api/health) for a health check.
+3. Scrape a page: `POST http://localhost:3043/api/scrape` with JSON body `{ "url": "https://example.com" }`.
+
+Wire contract: [`docs/oss/wire-contract.md`](https://github.com/Luckee-Core/website-site-scraper-open-source-express-server/blob/main/docs/oss/wire-contract.md). v1 is **local/trusted-network** — open scrape/extract endpoints; SSRF risk when exposed ([`SECURITY.md`](https://github.com/Luckee-Core/website-site-scraper-open-source-express-server/blob/main/SECURITY.md), [`docs/production-hardening.md`](https://github.com/Luckee-Core/website-site-scraper-open-source-express-server/blob/main/docs/production-hardening.md)).
 
 ---
 

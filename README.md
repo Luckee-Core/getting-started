@@ -66,6 +66,7 @@ Studios share the same backbone — **Next.js + Express + Supabase** — with en
 | **Lead Studio** | Lead CRM, research workers, email queue — reference self-hosted pair | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | [`lead-studio-express-server`](https://github.com/Luckee-Core/lead-studio-express-server) |
 | **My Health** | Self-hosted appointments, care team, journal, and health record — personal health dashboard on local Postgres | [`my-health-open-source`](https://github.com/Luckee-Core/my-health-open-source) | [`my-health-open-source-express-server`](https://github.com/Luckee-Core/my-health-open-source-express-server) |
 | **My Fundraise** | Fundraise CRM — investors pipeline, graphics studio (TSX preview + PNG export), pitch deck slide coach | [`my-fundraise-web`](https://github.com/Luckee-Core/my-fundraise-web) | [`my-fundraise-express-server`](https://github.com/Luckee-Core/my-fundraise-express-server) |
+| **My AI Threads** | Local-first browser for Cursor agent transcripts — FTS search, browse threads, and Ask with citations | [`my-ai-threads-console`](https://github.com/Luckee-Core/my-ai-threads-console) | [`my-ai-threads-express-server`](https://github.com/Luckee-Core/my-ai-threads-express-server) |
 | **Personal Finances** | Self-hosted money dashboard — CSV imports, your AI prompts for categorization, recurring bills and loans | [`personal-finances`](https://github.com/Luckee-Core/personal-finances) | [`personal-finances-express-server`](https://github.com/Luckee-Core/personal-finances-express-server) |
 | **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
 | **Blog Studio** | Blog authoring and distribution | [`blog-studio-open-source-web`](https://github.com/Luckee-Core/blog-studio-open-source-web) | [`blog-studio-open-source-express-server`](https://github.com/Luckee-Core/blog-studio-open-source-express-server) |
@@ -152,6 +153,26 @@ git clone https://github.com/Luckee-Core/my-fundraise-web.git
 4. Open [http://localhost:3000](http://localhost:3000) for the **landing page**; **`/investors`** for the CRM; sidebar also lists **Graphics** and **Pitch Decks**.
 
 Optional: `CURSOR_API_KEY` + `CURSOR_TARGET_REPO` on Express for graphics TSX generation. Graphics preview pipeline: `my-fundraise-express-server/data/how-to/graphics-tsx-preview.md`.
+
+### My AI Threads (web + API)
+
+Self-host a local browser when Cursor agent transcripts pile up and you need to search across chats, reopen a thread, or ask natural-language questions with citations. Indexes JSONL from `~/.cursor/projects` into SQLite FTS5 on your machine — Next.js console + Express API; Ask sends excerpted chunks to Anthropic only when you configure a key.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/my-ai-threads-console](https://github.com/Luckee-Core/my-ai-threads-console) |
+| API (Express) | [github.com/Luckee-Core/my-ai-threads-express-server](https://github.com/Luckee-Core/my-ai-threads-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/my-ai-threads-express-server.git
+git clone https://github.com/Luckee-Core/my-ai-threads-console.git
+```
+
+1. **Express** — `cp .env.example .env`, set `CURSOR_DATA_DIR` (default `~/.cursor/projects`), optional `ANTHROPIC_API_KEY` for Ask, `npm run dev` (port **3009** standalone; Luckee Dev Hub assigns **3092**).
+2. **Console** — `cp .env.example .env`, set `NEXT_PUBLIC_API_URL` to your Express URL (e.g. `http://localhost:3009` or hub port **3092**), `npm run dev`.
+3. Open [http://localhost:3000](http://localhost:3000) for the transcript list; **`/ask-page`** for Ask; click a row for **`/transcript-detail-page`**.
+
+First startup indexes transcripts incrementally (may take 5–30s on ~300 threads). Product reference: [`my-ai-threads-express-server/docs/MVP-OVERVIEW.md`](https://github.com/Luckee-Core/my-ai-threads-express-server/blob/main/docs/MVP-OVERVIEW.md). v1 is **local/trusted-operator** — transcripts stay on disk; Ask is the only outbound AI call.
 
 ### Reddit Studio (web + API)
 

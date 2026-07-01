@@ -63,6 +63,7 @@ Studios share the same backbone — **Next.js + Express + Supabase** — with en
 | --- | --- | --- | --- |
 | **Luckee Open Source** | Lead / ops CRM-style modular dashboard (Luckee OSS surface) | [`luckee-open-source`](https://github.com/Luckee-Core/luckee-open-source) | [`luckee-open-source-express`](https://github.com/Luckee-Core/luckee-open-source-express) |
 | **Luckee Blueprints** | Workforce training, certifications, delivery shell | [`luckee-blueprints`](https://github.com/Luckee-Core/luckee-blueprints) | [`luckee-blueprints-express-server`](https://github.com/Luckee-Core/luckee-blueprints-express-server) |
+| **App Store Manager** | App Store listing copy, TSX screenshot studio (PNG export), device frame assets, and screenshot slot assignments | [`app-store-manager-console`](https://github.com/Luckee-Core/app-store-manager-console) | [`app-store-manager-express-server`](https://github.com/Luckee-Core/app-store-manager-express-server) |
 | **Lead Studio** | Lead CRM, research workers, email queue — reference self-hosted pair | [`lead-studio-web-open-source`](https://github.com/Luckee-Core/lead-studio-web-open-source) | [`lead-studio-express-server`](https://github.com/Luckee-Core/lead-studio-express-server) |
 | **My Health** | Self-hosted appointments, care team, journal, and health record — personal health dashboard on local Postgres | [`my-health-open-source`](https://github.com/Luckee-Core/my-health-open-source) | [`my-health-open-source-express-server`](https://github.com/Luckee-Core/my-health-open-source-express-server) |
 | **My Fundraise** | Fundraise CRM — investors pipeline, graphics studio (TSX preview + PNG export), pitch deck slide coach | [`my-fundraise-web`](https://github.com/Luckee-Core/my-fundraise-web) | [`my-fundraise-express-server`](https://github.com/Luckee-Core/my-fundraise-express-server) |
@@ -236,6 +237,28 @@ git clone https://github.com/Luckee-Core/code-your-resume-open-source.git
 4. Open [http://localhost:3000](http://localhost:3000) (marketing) or [http://localhost:3000/dashboard](http://localhost:3000/dashboard) (app).
 
 Wire contract: [`code-your-resume-open-source/docs/wire-contract.md`](https://github.com/Luckee-Core/code-your-resume-open-source/blob/main/docs/wire-contract.md). OSS governance: [`mentorai-server/data/open-source/`](https://github.com/trouthouse-tech/mentorai-server/tree/main/data/open-source). v1 is **local/trusted-operator** — optional `CRM_API_SECRET`; see [`SECURITY.md`](https://github.com/Luckee-Core/code-your-resume-open-source/blob/main/SECURITY.md) on both repos.
+
+### App Store Manager (web + API)
+
+Self-host a CMS for iOS App Store listings when copy, screenshots, and device-frame marketing assets live in scattered docs and Figma. Manage apps and listing versions, edit locale copy with App Store character limits, author screenshot layouts in a TSX studio with live preview and PNG export, upload iPhone/iPad device frame PNGs, and assign graphics to App Store screenshot slots — same Next.js + Express + Supabase split as the other studios.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/app-store-manager-console](https://github.com/Luckee-Core/app-store-manager-console) |
+| API (Express) | [github.com/Luckee-Core/app-store-manager-express-server](https://github.com/Luckee-Core/app-store-manager-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/app-store-manager-express-server.git
+git clone https://github.com/Luckee-Core/app-store-manager-console.git
+```
+
+1. **Supabase** — run SQL in order from `app-store-manager-express-server/docs/sql/` (`001_…` through `008_…`; optional `009_seed_roads.sql` for ROADS buyer/seller seed data).
+2. **Storage** — create a public Supabase Storage bucket named **`device-frames`** for device case PNG uploads.
+3. **Express** — `cp .env.example .env`, fill `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`, set `CORS_ORIGINS=http://localhost:3000`, `npm run dev` (port **3009** standalone; Luckee Dev Hub assigns **3044** when launched from hub).
+4. **Console** — `cp .env.example .env.local`, set `NEXT_PUBLIC_APP_STORE_MANAGER_EXPRESS_URL` to your Express URL (e.g. `http://localhost:3044` from hub, or `http://localhost:3009` standalone). Hub Run also injects `NEXT_PUBLIC_SERVER_URL` / `NEXT_PUBLIC_API_URL`, which the console accepts as fallbacks.
+5. Open [http://localhost:3000](http://localhost:3000) for the apps dashboard; use **Listing detail** for copy + screenshot slots; **Screenshot studio** for TSX preview and PNG download; **Device frames** for case asset uploads.
+
+Screenshot studio pipeline: `app-store-manager-console/.cursor/architecture/021-app-store-screenshot-studio.md`. v1 is **local/trusted-operator** — no API auth until you harden for production.
 
 ### Code Control (web + API)
 

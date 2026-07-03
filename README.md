@@ -71,9 +71,11 @@ Studios share the same backbone — **Next.js + Express + Supabase** — with en
 | **Personal Finances** | Self-hosted money dashboard — CSV imports, your AI prompts for categorization, recurring bills and loans | [`personal-finances`](https://github.com/Luckee-Core/personal-finances) | [`personal-finances-express-server`](https://github.com/Luckee-Core/personal-finances-express-server) |
 | **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
 | **Blog Studio** | Blog authoring and distribution | [`blog-studio-open-source-web`](https://github.com/Luckee-Core/blog-studio-open-source-web) | [`blog-studio-open-source-express-server`](https://github.com/Luckee-Core/blog-studio-open-source-express-server) |
+| **Code Commit Summaries** | GitHub org/repo commit dashboards with AI daily and repo summaries | [`code-commit-summaries-web`](https://github.com/Luckee-Core/code-commit-summaries-web) | [`code-commit-summaries-express-server`](https://github.com/Luckee-Core/code-commit-summaries-express-server) |
 | **Code Control** | Standalone project workspace — schema, conventions, and guided codegen into customer repos | [`code-control`](https://github.com/Luckee-Core/code-control) | [`code-control-express-server`](https://github.com/Luckee-Core/code-control-express-server) |
 | **Code Your Resume** | Job-search CRM, resume graphics studio (TSX preview), skills/background/job studios | [`code-your-resume-open-source`](https://github.com/Luckee-Core/code-your-resume-open-source) | [`code-your-resume-open-source-express-server`](https://github.com/Luckee-Core/code-your-resume-open-source-express-server) |
 | **Instagram Studio** | Blog → AI carousel graphics (TSX preview) and Instagram Graph publishing | [`instagram-studio-open-source`](https://github.com/Luckee-Core/instagram-studio-open-source) | [`instagram-studio-open-source-express-server`](https://github.com/Luckee-Core/instagram-studio-open-source-express-server) |
+| **Innertube** | Self-host YouTube videos with InnerTube transcript fetch — add by URL, browse library, refetch transcripts | [`innertube-web`](https://github.com/Luckee-Core/innertube-web) | [`innertube-retriever-express-server`](https://github.com/Luckee-Core/innertube-retriever-express-server) |
 | **TikTok Studio** | Blog → AI carousel graphics (TSX preview) and TikTok content publishing | [`tiktok-studio`](https://github.com/Luckee-Core/tiktok-studio) | [`tiktok-studio-express-server`](https://github.com/Luckee-Core/tiktok-studio-express-server) |
 | **Reddit Studio** | Self-host Reddit OAuth connect and markdown self-post publishing per business tenant | [`reddit-studio`](https://github.com/Luckee-Core/reddit-studio) | [`reddit-studio-express-server`](https://github.com/Luckee-Core/reddit-studio-express-server) |
 | **Website Site Scraper** | Playwright API — one URL to full-page text or structured DOM rows | — | [`website-site-scraper-open-source-express-server`](https://github.com/Luckee-Core/website-site-scraper-open-source-express-server) |
@@ -259,6 +261,47 @@ git clone https://github.com/Luckee-Core/app-store-manager-console.git
 5. Open [http://localhost:3000](http://localhost:3000) for the apps dashboard; use **Listing detail** for copy + screenshot slots; **Screenshot studio** for TSX preview and PNG download; **Device frames** for case asset uploads.
 
 Screenshot studio pipeline: `app-store-manager-console/.cursor/architecture/021-app-store-screenshot-studio.md`. v1 is **local/trusted-operator** — no API auth until you harden for production.
+
+### Innertube (web + API)
+
+Self-hosted YouTube video library with InnerTube transcript retrieval — add videos by URL, browse a searchable table, and open a detail page with full transcript text and refetch.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/innertube-web](https://github.com/Luckee-Core/innertube-web) |
+| API (Express) | [github.com/Luckee-Core/innertube-retriever-express-server](https://github.com/Luckee-Core/innertube-retriever-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/innertube-retriever-express-server.git
+git clone https://github.com/Luckee-Core/innertube-web.git
+```
+
+1. **Supabase** — run `innertube-retriever-express-server/docs/sql/001_videos.sql` in the Supabase SQL editor.
+2. **Express** — `cp .env.example .env`, set `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `PORT=3048`, `npm install`, `npm run dev` (port **3048**; Luckee Dev Hub assigns **3048** when launched from hub).
+3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_INNERTUBE_EXPRESS_URL=http://localhost:3048`, `npm install`, `npm run dev` (port **3000** standalone; hub assigns **3049** when launched from Luckee Dev Hub).
+4. Open [http://localhost:3000/videos](http://localhost:3000/videos) standalone, or the hub-assigned web port (e.g. **3049**) when launched from Luckee Dev Hub.
+
+API endpoints: `GET /api/health`, `POST /api/transcript` (low-level fetch), `GET /api/data/videos`, `POST /api/data/videos/from-url` (dedupe + persist).
+
+### Code Commit Summaries (web + API)
+
+Personal developer tool — aggregate GitHub commits across your user account and orgs, then generate AI daily and per-repo summaries. No database in v1; data is fetched live from GitHub.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/code-commit-summaries-web](https://github.com/Luckee-Core/code-commit-summaries-web) |
+| API (Express) | [github.com/Luckee-Core/code-commit-summaries-express-server](https://github.com/Luckee-Core/code-commit-summaries-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/code-commit-summaries-express-server.git
+git clone https://github.com/Luckee-Core/code-commit-summaries-web.git
+```
+
+1. **Express** — `cp .env.example .env`, set `GITHUB_PERSONAL_ACCESS_TOKEN`, `GITHUB_ALLOWED_OWNERS`, `GITHUB_DEFAULT_AUTHOR`, `ANTHROPIC_API_KEY`, `npm run dev` (port **3000** standalone; Luckee Dev Hub assigns **3046** when launched from hub).
+2. **Web** — `cp .env.example .env.local`, set `COMMIT_SUMMARIES_EXPRESS_URL` to your Express URL (e.g. `http://localhost:3046` from hub), `npm run dev`.
+3. Open [http://localhost:3001](http://localhost:3001) standalone, or the hub-assigned web port (e.g. **3047**) when launched from Luckee Dev Hub.
+
+Multi-root workspace: `code-commit-summaries-web.code-workspace` in the parent folder (includes web + API and related repos). Luckee Dev Hub **Open Cursor** uses this workspace when configured in `hub.local.json`.
 
 ### Code Control (web + API)
 

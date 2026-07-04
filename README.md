@@ -76,6 +76,7 @@ Studios share the same backbone — **Next.js + Express + Supabase** — with en
 | **Code Your Resume** | Job-search CRM, resume graphics studio (TSX preview), skills/background/job studios | [`code-your-resume-open-source`](https://github.com/Luckee-Core/code-your-resume-open-source) | [`code-your-resume-open-source-express-server`](https://github.com/Luckee-Core/code-your-resume-open-source-express-server) |
 | **Instagram Studio** | Blog → AI carousel graphics (TSX preview) and Instagram Graph publishing | [`instagram-studio-open-source`](https://github.com/Luckee-Core/instagram-studio-open-source) | [`instagram-studio-open-source-express-server`](https://github.com/Luckee-Core/instagram-studio-open-source-express-server) |
 | **Innertube** | Self-host YouTube videos with InnerTube transcript fetch — add by URL, browse library, refetch transcripts | [`innertube-web`](https://github.com/Luckee-Core/innertube-web) | [`innertube-retriever-express-server`](https://github.com/Luckee-Core/innertube-retriever-express-server) |
+| **My Substack Manager** | Scrape public Substack Notes feed, track likes/replies/restacks over time, performance table + manual scraper | [`my-substack-manager-web`](https://github.com/Luckee-Core/my-substack-manager-web) | [`my-substack-manager-express-server`](https://github.com/Luckee-Core/my-substack-manager-express-server) |
 | **TikTok Studio** | Blog → AI carousel graphics (TSX preview) and TikTok content publishing | [`tiktok-studio`](https://github.com/Luckee-Core/tiktok-studio) | [`tiktok-studio-express-server`](https://github.com/Luckee-Core/tiktok-studio-express-server) |
 | **Reddit Studio** | Self-host Reddit OAuth connect and markdown self-post publishing per business tenant | [`reddit-studio`](https://github.com/Luckee-Core/reddit-studio) | [`reddit-studio-express-server`](https://github.com/Luckee-Core/reddit-studio-express-server) |
 | **Website Site Scraper** | Playwright API — one URL to full-page text or structured DOM rows | — | [`website-site-scraper-open-source-express-server`](https://github.com/Luckee-Core/website-site-scraper-open-source-express-server) |
@@ -282,6 +283,27 @@ git clone https://github.com/Luckee-Core/innertube-web.git
 4. Open [http://localhost:3000/videos](http://localhost:3000/videos) standalone, or the hub-assigned web port (e.g. **3049**) when launched from Luckee Dev Hub.
 
 API endpoints: `GET /api/health`, `POST /api/transcript` (low-level fetch), `GET /api/data/videos`, `POST /api/data/videos/from-url` (dedupe + persist).
+
+### My Substack Manager (web + API)
+
+Scrape your public Substack Notes profile feed, persist engagement metrics in Supabase, and review performance in a sortable dashboard — likes, replies, restacks, engagement score, and manual re-scrape from the UI.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/my-substack-manager-web](https://github.com/Luckee-Core/my-substack-manager-web) |
+| API (Express) | [github.com/Luckee-Core/my-substack-manager-express-server](https://github.com/Luckee-Core/my-substack-manager-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/my-substack-manager-express-server.git
+git clone https://github.com/Luckee-Core/my-substack-manager-web.git
+```
+
+1. **Supabase** — run `my-substack-manager-express-server/supabase/migrations/20260704120000_substack_notes.sql` in the Supabase SQL editor.
+2. **Express** — `cp .env.example .env`, fill `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and Substack vars (`SUBSTACK_AUTHOR_USER_ID`, `SUBSTACK_PUBLICATION_SUBDOMAIN`), `npm install`, `npx playwright install chromium`, `npm run dev` (port **3009** standalone; Luckee Dev Hub assigns **3050** when launched from hub).
+3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_API_URL` to your Express URL (e.g. `http://localhost:3050` from hub), `npm install`, `npm run dev`.
+4. Open [http://localhost:3000/notes](http://localhost:3000/notes) standalone, or the hub-assigned web port (e.g. **3051**) when launched from Luckee Dev Hub.
+
+API endpoints: `POST /api/scrapers/substack-notes/run`, `GET /api/data/substack-notes`, `GET /api/data/substack-notes-scrape-runs`. Manual checklist: `my-substack-manager-express-server/docs/MANUAL_E2E_CHECKLIST.md`. v1 metrics are **public feed only** (no impressions/reach — requires author session in v2).
 
 ### Code Commit Summaries (web + API)
 

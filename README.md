@@ -278,8 +278,8 @@ git clone https://github.com/Luckee-Core/innertube-retriever-express-server.git
 git clone https://github.com/Luckee-Core/innertube-web.git
 ```
 
-1. **Supabase** — run `innertube-retriever-express-server/docs/sql/001_videos.sql` in the Supabase SQL editor.
-2. **Express** — `cp .env.example .env`, set `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `PORT=3048`, `npm install`, `npm run dev` (port **3048**; Luckee Dev Hub assigns **3048** when launched from hub).
+1. **Postgres** — local database `innertube`; apply `innertube-retriever-express-server/migrations/setup.sql` with `psql "$DATABASE_URL" -f migrations/setup.sql`, or use Luckee Hub **Setup database** on the Innertube project.
+2. **Express** — `cp .env.example .env`, set `DATABASE_URL` (and `PORT=3048` if needed), `npm install`, `npm run dev` (port **3048**; Luckee Dev Hub assigns **3048** when launched from hub).
 3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_INNERTUBE_EXPRESS_URL=http://localhost:3048`, `npm install`, `npm run dev` (port **3000** standalone; hub assigns **3049** when launched from Luckee Dev Hub).
 4. Open [http://localhost:3000/videos](http://localhost:3000/videos) standalone, or the hub-assigned web port (e.g. **3049**) when launched from Luckee Dev Hub.
 

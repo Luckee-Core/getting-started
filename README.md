@@ -70,7 +70,7 @@ Studios share the same backbone — **Next.js + Express + Supabase** — with en
 | **My Fundraise** | Fundraise CRM — investors pipeline, graphics studio (TSX preview + PNG export), pitch deck slide coach | [`my-fundraise-web`](https://github.com/Luckee-Core/my-fundraise-web) | [`my-fundraise-express-server`](https://github.com/Luckee-Core/my-fundraise-express-server) |
 | **My AI Threads** | Local-first browser for Cursor agent transcripts — FTS search, browse threads, and Ask with citations | [`my-ai-threads-console`](https://github.com/Luckee-Core/my-ai-threads-console) | [`my-ai-threads-express-server`](https://github.com/Luckee-Core/my-ai-threads-express-server) |
 | **Personal Finances** | Self-hosted money dashboard — CSV imports, your AI prompts for categorization, recurring bills and loans | [`personal-finances`](https://github.com/Luckee-Core/personal-finances) | [`personal-finances-express-server`](https://github.com/Luckee-Core/personal-finances-express-server) |
-| **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/Luckee-Core/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/Luckee-Core/knowledge-studio-express-server) |
+| **Knowledge Studio** | YouTube / knowledge workflows | [`knowledge-studio-open-source`](https://github.com/trouthouse-tech/knowledge-studio-open-source) | [`knowledge-studio-express-server`](https://github.com/trouthouse-tech/knowledge-studio-express-server) |
 | **Blog Studio** | Blog authoring and distribution | [`blog-studio-open-source-web`](https://github.com/Luckee-Core/blog-studio-open-source-web) | [`blog-studio-open-source-express-server`](https://github.com/Luckee-Core/blog-studio-open-source-express-server) |
 | **Code Commit Summaries** | GitHub org/repo commit dashboards with AI daily and repo summaries | [`code-commit-summaries-web`](https://github.com/Luckee-Core/code-commit-summaries-web) | [`code-commit-summaries-express-server`](https://github.com/Luckee-Core/code-commit-summaries-express-server) |
 | **Code Control** | Standalone project workspace — schema, conventions, and guided codegen into customer repos | [`code-control`](https://github.com/Luckee-Core/code-control) | [`code-control-express-server`](https://github.com/Luckee-Core/code-control-express-server) |
@@ -220,6 +220,27 @@ git clone https://github.com/Luckee-Core/personal-finances.git
 4. Open [http://localhost:3000](http://localhost:3000) for the landing page; dashboard at **`/dashboard`**.
 
 Full walkthrough: [`personal-finances-express-server/docs/oss-quickstart.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/docs/oss-quickstart.md). Wire contract: [`docs/oss/wire-contract.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/docs/oss/wire-contract.md). v1 is **local/trusted-operator** — no API auth until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/personal-finances-express-server/blob/main/SECURITY.md)). Built by Matt @ [TroutHouseTech](https://www.trouthousetech.com).
+
+### My Ops Tracker (web + API)
+
+Self-host a studio ops dashboard: customers, projects, tickets, time entries, estimates and proposals, retainers, subscriptions, internal projects, and optional integrations (Google Sheets tracker import, Code Commits import, ticket Cursor agent). Next.js web on port **3037**; Express + Supabase on port **3036**.
+
+| Repo | URL |
+| --- | --- |
+| Web (Next.js) | [github.com/Luckee-Core/my-ops-tracker-web](https://github.com/Luckee-Core/my-ops-tracker-web) |
+| API (Express) | [github.com/Luckee-Core/my-ops-tracker-express-server](https://github.com/Luckee-Core/my-ops-tracker-express-server) |
+
+```bash
+git clone https://github.com/Luckee-Core/my-ops-tracker-express-server.git
+git clone https://github.com/Luckee-Core/my-ops-tracker-web.git
+```
+
+1. **Supabase** — run [`docs/sql/000_full_schema.sql`](https://github.com/Luckee-Core/my-ops-tracker-express-server/blob/main/docs/sql/000_full_schema.sql) once on a dedicated project (see [`docs/sql/README.md`](https://github.com/Luckee-Core/my-ops-tracker-express-server/blob/main/docs/sql/README.md)).
+2. **Express** — `cp .env.example .env`, fill `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`, `npm run dev` (port **3036**).
+3. **Web** — `cp .env.example .env.local`, set `NEXT_PUBLIC_SERVER_URL=http://localhost:3036`, `npm run dev` (port **3037**).
+4. Open [http://localhost:3037/dashboard](http://localhost:3037/dashboard); API reference at **`/docs/api`**.
+
+Full walkthrough: [`docs/oss/oss-quickstart.md`](https://github.com/Luckee-Core/my-ops-tracker-express-server/blob/main/docs/oss/oss-quickstart.md). Wire contract: [`docs/oss/wire-contract.md`](https://github.com/Luckee-Core/my-ops-tracker-express-server/blob/main/docs/oss/wire-contract.md). OSS governance: [`mentorai-server/data/open-source/`](https://github.com/Luckee-Core/mentorai-server/tree/main/data/open-source). v1 is **local/trusted-operator** — no API auth on `/api/data` until you harden for production ([`SECURITY.md`](https://github.com/Luckee-Core/my-ops-tracker-express-server/blob/main/SECURITY.md) on both repos).
 
 ### Code Your Resume (web + API)
 
